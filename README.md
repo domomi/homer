@@ -4,7 +4,7 @@ Homer is a community-based, real-time housing marketplace which empowers you to 
 
 ## Features
 
-For Homer to flourish, it's important that people know the way they work! Here are some tips for crafting a scalable, well-designed, fully open source web-app. 
+For Homer to flourish, it's important that people understand how it works! We are crafting a scalable, well-designed, fully open source web-app. 
 
 - Rules are written in Python; they can utilize any Python libraries or functions 
 - Serverless design is cheaper, easier to maintain, and scales to terabytes per day
