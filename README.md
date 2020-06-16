@@ -2,6 +2,8 @@
 
 Homer is a community-based, real-time housing marketplace which empowers you to find, compare and get alerts on rental homes from your community using the logic you define. Renters and homeowners use Homer everyday to improve their rental journey and shape the future of cities.
 
+This repo is a work in progress. In fact, your first pull request could be to fix or add to this doc. Reach out to your team lead or anyone on the engineering team with questions, or try the #dev Slack channel.
+
 ## Features
 
 For Homer to flourish, it's important that people understand how it works! We are crafting a scalable, well-designed, fully open source web-app. 
