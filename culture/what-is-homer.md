@@ -51,7 +51,7 @@ We map large aspects of the housing world in our app and website: {insert web-ap
 
 ### How do we make money?
 
-> Homer has 3 businesses: _Listings_, _Auctions_ and _Content_.
+> Homer has 3 businesses: _Insights_, _Beacons_ and _Content_.
 
 > **Market Insights**: Homer [housing partners](https://www.homer.domomi.com/homes) pay a monthly subscription fee to access
 > market data from an unlimited number of homes for rent, plus a host of other benefits. They do not pay a commission fee on
