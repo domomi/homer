@@ -114,7 +114,6 @@ Further reading:
 
 - [On empathy and pull requests](https://slack.engineering/on-empathy-pull-requests-979e4257d158)
 - [Rules of communicating at GitHub](https://ben.balter.com/2014/11/06/rules-of-communicating-at-github/)
-- [RFC on defining PR roles at Artsy](https://github.com/artsy/README/issues/177)
 
 ### Testing
 
