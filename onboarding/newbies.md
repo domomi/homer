@@ -7,10 +7,9 @@ description: Your first steps to being productive
 
 You have hopefully been onboarded by our people team. You know the first rule, always keep snacks nearby! You probably have a computer that's plugged in and have set some things up. Awesome.
 
-Now, it's time to learn about our engineering -- who we are and how we operate. We've broken this down into two
-pieces:
+Now, it's time to learn about our engineering -- who we are and how we operate. We've broken this down into two pieces:
 
-1. [An introduction to our engineering workflow](/onboarding/engineering-introduction.md)
+1. [An introduction to our engineering workflow](/onboarding/engineering-introduction.md) provides a 
 2. A guide for getting started. Your manager should have created a github issue for you based on our
    [onboarding template](https://github.com/artsy/potential/blob/master/.github/ISSUE_TEMPLATE/engineering-onboarding.md),
    and even a second one based on our
