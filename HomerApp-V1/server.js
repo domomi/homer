@@ -25,7 +25,7 @@ var
 const port = (process.env.PORT || 3002)
 app.listen(port);
 
-
+server.use(express.static(path.join(__dirname, 'public')));
 
 server.get('/', function (req, res) {
     console.log("Homepage");
@@ -683,3 +683,5 @@ server.get('/test', (req, res) => {
     res.send('testing....')
     res.end()
 })
+
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
