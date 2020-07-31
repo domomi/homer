@@ -1,5 +1,5 @@
 ---
-name: ":books: Documentation"
+name: "📚 Documentation"
 about: Create a report for fixing or adding additional documentation related to Homer
 
 ---
