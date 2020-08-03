@@ -1,7 +1,7 @@
 
 var Files = {};
 // Step 3: The Socket.io Server
-
+const MONGO_CONNECTION_ENDPOINT = 'mongodb://localhost:27017/Homer'
 var
     express = require('express')
     , server = express()
@@ -42,7 +42,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.post('/uploadVideoInfo', (req, res) => {
     console.log(req.body)
     let uploadInfo = req.body
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -310,7 +310,7 @@ server.post('/updateBeaconRadius', (req, res) => {
             break;
     }
 
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -338,7 +338,7 @@ server.post('/get_scheduled_visits', (req, res) => {
     // console.log(req.body)
     console.log(req.body.user_email)
 
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -468,7 +468,7 @@ server.post('/get_video_links', (req, res) => {
     console.log(req.body.post_id)
     console.log(req.body.room_id)
     let room_id = parseInt(req.body.room_id)
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -498,7 +498,7 @@ server.post('/schedule_a_visit', (req, res) => {
 server.post('/add_hash_tag', (req, res) => {
     let added_hashtag = req.body.hash_tag
 
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -523,7 +523,7 @@ server.post('/add_hash_tag', (req, res) => {
 })
 
 server.get('/get_hash_tag', (req, res) => {
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -546,7 +546,7 @@ server.post('/submit_upload_info', (req, res) => {
     console.log('submit_upload_info')
     console.log(req.body)
     let videoInfo = req.body
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -563,7 +563,7 @@ server.post('/submit_upload_info', (req, res) => {
 server.post('/view_upload_info', (req, res) => {
     let user_email = req.body.user_email
     console.log('user_email' + user_email)
-    MongoClient.connect('mongodb://localhost:27017/Homer', function (err, db) {
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Homer");
 
@@ -675,7 +675,17 @@ server.post('/upload_hashtag_picture2', function (req, res) {
 
 server.post('/temporary_user', (req, res) => {
     console.log(req.body)
+    let temp_user_info = req.body
     res.send('lol!')
+    MongoClient.connect(MONGO_CONNECTION_ENDPOINT, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("Homer");
+        
+        dbo.collection("user").insertOne(
+            temp_user_info
+        )
+
+    })
     res.end()
 })
 

@@ -78,7 +78,7 @@ import HashTagChoices from './components/MapBox/HashTagChoices'
 
 import LandingPage from './components/LandingPage'
 
-
+import Attributes from './components/LandingPage/Attributes'
 // Hide but not unmount routes:
 // import LiveRoute from 'react-live-route'
 const LiveRoute = withRouter(NotLiveRoute)
@@ -166,7 +166,8 @@ function App() {
 
           <div className='tab'>
             <Route exact path='/' component={LandingPage} />
-            <Route exact path='/LandingPage' component={LandingPage} />
+            <Route  path='/LandingPage' component={LandingPage} />
+            <Route exact path='/Attributes' component={Attributes}></Route>
 
             {/* WebPageAppInstall */}
             <Route exact path='/WebPageAppInstall' component={WebPageAppInstall} />

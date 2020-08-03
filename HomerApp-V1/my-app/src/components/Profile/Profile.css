@@ -1,0 +1,24 @@
+
+#Profile{
+    text-align: center;
+}
+
+#avatarPic{
+    max-width: 25vw;
+    /* display: block; */
+    width: 40px;
+    height: 40px;
+    background: #E6E7ED;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
+
+/* body{
+    background-color: rgb(102, 70, 206);
+} */
+
+#userName{
+    color: white;
+    font-weight: 700;
+    font-size: 35pt;
+}
