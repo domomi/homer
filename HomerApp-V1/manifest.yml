@@ -1,6 +1,0 @@
-applications:
-#- path: public/
-- name: my-app
-  random-route: true
-  memory: 128M
-  buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
