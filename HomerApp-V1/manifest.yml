@@ -1,6 +1,6 @@
 applications:
-#- path: public/
-- name: my-app
+- path: public/
+  name: find-homer
   random-route: true
   memory: 128M
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
