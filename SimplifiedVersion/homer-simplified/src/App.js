@@ -3,8 +3,8 @@ import React, { useEffect, Fragment } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // import { orange } from '@material-ui/core/colors'
 import { Typography } from '@material-ui/core';
-
-
+import { useHistory } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 
 import { Provider } from 'react-redux'
@@ -42,7 +42,8 @@ import Listings from './Pages/UserSegmentation/HomeOwner/HomeOwnerListings/HomeO
 import Admin from './Pages/UserSegmentation/Admin/Admin'
 import { ajax } from 'jquery';
 import Profile from './Pages/Profile/Profile'
-
+import Scheduler from './Pages/Scheduler/Scheduler'
+import housePNG from './Pages/Scheduler/img/house.jpg'
 
 // Stripe API
 import { loadStripe } from '@stripe/stripe-js';
@@ -68,16 +69,38 @@ const useStyles = makeStyles((theme) => ({
 
 
 function App() {
+  // Material UI
   const classes = useStyles();
+
+  // On load
   useEffect(() => {
     console.log(theme)
     console.log(theme.palette.secondary.main)
   }, [])
 
-  
+  // test
+
+
+
+  // Auth0 history test
+  const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+  const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+  const history = useHistory();
+  const onRedirectCallback = (appState) => {
+    history.push(appState?.returnTo || window.location.pathname);
+  };  
 
   return (
-    
+    <Auth0Provider
+      domain={domain}
+      clientId={clientId}
+      redirectUri={window.location.origin + '/getStarted'}
+      // prompt='none'
+      // onRedirectCallback={onRedirectCallback}
+    // redirectUri='http://localhost:3000/UserSegmentation'
+    // redirectUri='http://localhost:3000/getStarted'
+
+    >
     <Fragment>
       <Provider store={store}>
       {/* <InjectedCheckoutForm /> */}
@@ -94,6 +117,7 @@ function App() {
             <Route exact path='/' component={LoginPage} />
             <Route exact path='/GetStarted' component={GetStarted} />
             <Route exact path='/UserSegmentation' component={UserSegmentation} />
+            <Route exact path='/Scheduler' component={Scheduler} />
 
             {/* Renters */}
             <Route exact path='/RenterMap' component={RenterMap} />
@@ -135,10 +159,9 @@ function App() {
       </ThemeProvider>
       </Provider>
     </Fragment>
-  
+    </Auth0Provider>
   );
 }
 
 export default App;
-
 

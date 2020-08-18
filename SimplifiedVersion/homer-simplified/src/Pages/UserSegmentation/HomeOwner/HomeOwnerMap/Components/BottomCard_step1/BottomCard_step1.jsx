@@ -42,39 +42,62 @@ const useStyles = makeStyles({
 
 
 export default function OutlinedCard(props) {
+
     useEffect(() => {
         console.log('props')
         console.log(props)
 
     }, [])
+
+    const [showConfirmPosition, setShowConfirmPosition] = useState(false)
+
+
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
-    const getCurrentLocation = () => {
-        function getLocation() {
+    // const getCurrentLocation = () => {
+    //     function getLocation() {
 
-            if (navigator.geolocation) {
-                // let current_position = navigator.geolocation.getCurrentPosition(classRef.showPosition);
-                // console.log(current_position)
-            } else {
-                console.log('none')
-            }
-        }
-        function showPosition(position) {
-            console.log(position.coords)
-            let lat = position.coords.latitude
-            let lng = position.coords.longitude
-            console.log([lat, lng])
+    //         if (navigator.geolocation) {
+    //             // let current_position = navigator.geolocation.getCurrentPosition(classRef.showPosition);
+    //             // console.log(current_position)
+    //         } else {
+    //             console.log('none')
+    //         }
+    //     }
+    //     function showPosition(position) {
+    //         console.log(position.coords)
+    //         let lat = position.coords.latitude
+    //         let lng = position.coords.longitude
+    //         console.log([lat, lng])
 
-            // classRef.setState({ current_location: [lat, lng] })
-        }
-    }
-    const getCurrentPosition = () => {
+    //         // classRef.setState({ current_location: [lat, lng] })
+    //     }
+    // }
+    const flyToCurrentPosition = () => {
         console.log('getCurrentPosition')
-        props.action()
+
+        $.when(props.action1())
+            .done(() => {
+                setTimeout(() => {
+                    setShowConfirmPosition(true)     
+                }, 1000);
+                
+            })
+
+
         console.log($('.mapboxgl-ctrl-geolocate'))
-        $('.mapboxgl-ctrl-geolocate').click() //Ask if it is the user's location?
-        
+        $('.mapboxgl-ctrl-geolocate').click() //Ask if it is the user's location?   
     }
+
+    const  getCurrentPosition= () => {
+        console.log('flyToCurrentPosition')
+        $.when()
+        .done(()=>{
+            props.action2()
+        })
+    }
+
+
     const handleSkip = () => {
         console.log('handleSkip()')
         // Proceed to the next Card
@@ -103,7 +126,37 @@ export default function OutlinedCard(props) {
                     </CardContent>
                     <CardActions >
                         <div className={classes.getCurrentLocationBtn}>
-                            <Button onClick={getCurrentPosition} variant='outlined' color='primary'>Use current location</Button>
+
+                            {!showConfirmPosition &&<Button onClick={flyToCurrentPosition} variant='outlined' color='primary'>Use current location</Button>}
+                            { showConfirmPosition && <Button onClick={getCurrentPosition} variant='outlined' color='secondary'>Confirm location</Button>}
+
+                        </div>
+
+                        <div>
+                            <Button onClick={handleSkip}>Skip for now</Button>
+                        </div>
+                    </CardActions>
+                </Card>
+            }
+
+{
+                card_step == 2 &&
+                <Card className={classes.root} variant="outlined">
+                    <CardContent >
+
+                        <Typography variant="h5" component="h2">
+                         Fill in basic information
+                     </Typography>
+                        <form>
+                            <input type='text' value='description' />
+                        </form>
+                    </CardContent>
+                    <CardActions >
+                        <div className={classes.getCurrentLocationBtn}>
+
+                            {!showConfirmPosition &&<Button onClick={flyToCurrentPosition} variant='outlined' color='primary'>Use current location</Button>}
+                            { showConfirmPosition && <Button onClick={getCurrentPosition} variant='outlined' color='secondary'>Confirm location</Button>}
+
                         </div>
 
                         <div>
@@ -114,7 +167,7 @@ export default function OutlinedCard(props) {
             }
 
             {
-                card_step == 2 &&
+                card_step == 3 &&
                 <Card className={classes.root} variant="outlined">
                     <CardContent >
 

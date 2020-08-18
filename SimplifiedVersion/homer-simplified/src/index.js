@@ -5,27 +5,32 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Auth0Provider } from "@auth0/auth0-react";
 import './Fonts/Chewy-Regular/Chewy-Regular.ttf'
+import { useHistory } from "react-router-dom";
 
 import { loadStripe } from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js'
 
+//  const onRedirectCallback = (appState) => {
+//     history.push(appState?.returnTo || window.location.pathname);
+//   };
 
 ReactDOM.render(
   
 <Fragment>
 
-<Auth0Provider
+{/* <Auth0Provider
       domain="homescouter.us.auth0.com"
       clientId="VIXIbdsJOsSN6XsrzinngVfCsJRmo90f"
       redirectUri={window.location.origin + '/getStarted'}
+      // onRedirectCallback={onRedirectCallback}
     // redirectUri='http://localhost:3000/UserSegmentation'
     // redirectUri='http://localhost:3000/getStarted'
 
-    >
+    > */}
       <React.StrictMode>
         <App />
       </React.StrictMode>
-    </Auth0Provider>
+    {/* </Auth0Provider> */}
 </Fragment>
 ,
 

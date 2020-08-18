@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import LoginBtn from './Components/LoginBtn'
-import SignInBtn from './Components/SignInBtn'
+import SignUpBtn from './Components/SignUpBtn'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -53,7 +53,7 @@ export default function LoginPage(props) {
                     New Here?
             </Typography>
 
-                <SignInBtn text='Get Started' className={classes.SignUpBtn} />
+                <SignUpBtn text='Get Started' className={classes.SignUpBtn} />
             </div>
 
         </div>

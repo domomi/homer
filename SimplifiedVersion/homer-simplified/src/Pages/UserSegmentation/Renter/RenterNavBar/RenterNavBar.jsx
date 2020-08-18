@@ -33,7 +33,7 @@ import { Typography } from '@material-ui/core'
 import dottedBellIcon from './img/bell_with_a_dot.svg'
 
 import $ from 'jquery'
-
+import { useAuth0 } from "@auth0/auth0-react";
 import { connect } from "react-redux";
 import store from '../../../../redux/store';
 import {fetchLngLat} from '../../../../redux/reducer'
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
  function BottomNavBar(props) {
     const classes = useStyles();
     const [triggered, toggleComponent] = React.useState(false)
-
+    const {user} = useAuth0(); 
     const handleAddBtn = () => {
         console.log('handleAddBtn')
         toggleComponent(!triggered)
@@ -150,7 +150,8 @@ const useStyles = makeStyles((theme) => ({
     const handleAlert = (event) => {
         setAnchorAlertMenu(event.currentTarget);
 
-        let data = { user_email: store.getState().user_obj.email };
+        // let data = { user_email: store.getState().user_obj.email };
+        let data = {user_email : user.email}
         $.ajax({
             type: "POST",
             url: `${process.env.REACT_APP_EXPRESS_ENDPOINT}/fetchUserAlerts`,
@@ -175,8 +176,8 @@ const useStyles = makeStyles((theme) => ({
 
         console.log('use effect')
         //Check if the user has got any notes
-        let data = {user_email : store.getState().user_obj.email}
-       
+        // let data = {user_email : store.getState().user_obj.email}
+        let data = {user_email : user.email}
         $.when(data).then(
             ()=>{
                 console.log(data)

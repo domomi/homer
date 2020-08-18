@@ -8,10 +8,10 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-import { StylesProvider } from '@material-ui/core';
+// import { StylesProvider } from '@material-ui/core';
 import HomeOwnerNavBar from '../HomeOwnerNavBar/HomeOwnerNavBar'
-import BottomCard_step1 from './Components/BottomCard_step1/BottomCard_step1'
-import BottomCard_step2 from './Components/BottomCard_step2/BottomCard_step2'
+import BottomCard from './Components/BottomCard_step1/BottomCard_step1'
+// import BottomCard_step2 from './Components/BottomCard_step2/BottomCard_step2'
 mapboxgl.accessToken = 'pk.eyJ1Ijoicmlja3NvbjIwMjAiLCJhIjoiY2tkMGxiY3FuMDNwYjJ0bnV1a2g5bThxaSJ9.ZatvhnN4mf-f47KYWUC1Sg'
 // `${process.env.REACT_APP_MAPBOX_API_ACCESS_TOKEN}`;
 
@@ -92,10 +92,31 @@ export default class RenterMap extends Component {
 
     }
 
-    getCurrentLocation(){
+    flyToCurrentLocation(){
         let map = classRef.state.mapObj
         // Center of the Map
         console.log(map.getCenter())
+    }
+
+    getCurrentLocation(){
+        console.log('getCurrentLocation')
+        let map = classRef.state.mapObj
+        // Center of the Map
+        console.log('map.getCenter()')
+        console.log(map.getCenter())
+        
+        // Push this to the database
+        let map_center = map.getCenter()
+        let data = {map_center : map_center}
+        $.ajax({
+            type: "POST",
+            url: `${process.env.REACT_APP_EXPRESS_ENDPOINT}/updateListingLocation`,
+            data: data,
+            dataType: "text",
+            success: function (response) {
+                console.log(response)
+            }
+        });
     }
 
     render() {
@@ -103,7 +124,7 @@ export default class RenterMap extends Component {
             <Fragment>
                 <ProgressBar percentage='75' />
                 <div style={styles.BottomCard}>
-                    <BottomCard_step1 action={this.getCurrentLocation} />
+                    <BottomCard action1={this.flyToCurrentLocation} action2={this.getCurrentLocation} />
                 </div>
                 <div id='mapContainer'>
 

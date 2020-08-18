@@ -15,7 +15,7 @@ import RenterNavBar from '../RenterNavBar/RenterNavBar'
 import BottomCard from './Components/BottomCard/Components/BottomCard/BottomCard'
 import { Redirect } from 'react-router-dom';
 
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 
 import store from '../../../../redux/reducer'
@@ -38,9 +38,9 @@ const styles = {
         bottom: '10vh',
         zIndex: 100,
     },
-    promptLogin : {
-        position : 'fixed',
-        top : '15vh'
+    promptLogin: {
+        position: 'fixed',
+        top: '15vh'
     }
 }
 var classRef = null;
@@ -55,15 +55,33 @@ class RenterMap extends Component {
 
             redirectToLoginBool: false,
 
-            flyToLngLat : props.flyToLngLat
+            flyToLngLat: props.flyToLngLat
         }
+        console.log(props)
         classRef = this
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
+        console.log('will receive props')
         console.log(this.props)
-        classRef.state.mapObj.flyTo(this.state.flyToLngLat)
+        console.log(this.props.flyToLngLat)
+        if (this.props.flyToLngLat.length != 0 ) {
+            classRef.state.mapObj.flyTo({ center: this.props.flyToLngLat })
+        }
     }
+
+    
+
+    componentDidUpdate(){
+        console.log('did update')
+
+        console.log(this.props.flyToLngLat)
+
+        if (this.props.flyToLngLat.length != 0 ) {
+            classRef.state.mapObj.flyTo({ center: this.props.flyToLngLat })
+        }
+    }
+
 
 
     componentDidMount() {
@@ -150,9 +168,9 @@ class RenterMap extends Component {
                 }).then(() => {
                     // set state for the map obj
                     classRef.setState({ mapObj: map })
-                }).then(()=>{
+                }).then(() => {
                     console.log(classRef.state.mapObj)
-                }).then(()=>{
+                }).then(() => {
                     console.log('fly to')
                     classRef.state.mapObj.flyTo(this.state.flyToLngLat)
                 })
@@ -173,7 +191,7 @@ class RenterMap extends Component {
                     <Fragment>
                         <ProgressBar percentage='75' />
                         <div style={styles.BottomCard}>
-                            <BottomCard user={this.props.auth0}/>
+                            <BottomCard user={this.props.auth0} />
                         </div>
                         <div id='mapContainer'>
 
@@ -182,14 +200,14 @@ class RenterMap extends Component {
                         </div>
                     </Fragment>}
 
-                    {this.state.redirectToLoginBool && 
+                {this.state.redirectToLoginBool &&
 
                     <div style={styles.promptLogin}>
                         <div>Prompt Login</div>
-                        <LoginBtn/> 
+                        <LoginBtn />
                     </div>
-                    
-                    }
+
+                }
 
 
                 <RenterNavBar />
@@ -199,12 +217,15 @@ class RenterMap extends Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
+    console.log(state)
+    // classRef.state.mapObj.flyTo(this.state.flyToLngLat)
+
     return {
-      flyToLngLat : state.lnglat,
-    //   dashboardStats : state.dashboardStats
+        flyToLngLat: state.lnglat,
+        //   dashboardStats : state.dashboardStats
     };
-  }
+}
 
 
 

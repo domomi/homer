@@ -30,6 +30,7 @@ f = require('util').format,
 app.use(cors())
 
 // app.use(siofu.router)
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // Combine Node and React together working at the same port
@@ -93,7 +94,10 @@ app.post('/getUserWholeProfile', (req, res) => {
             ).then(
                 result => {
                     console.log(result)
-                    res.end(res.send(result))
+                    res.send(result)
+                    db.close()
+                    res.end()
+
                 }
             )
         })
@@ -317,7 +321,7 @@ app.post('/HomeOwnerSkipVideoUpload', (req, res) => {
                     { upsert: true }
                 )
                 db.close()
-                res.send('success')   
+                res.send('success')
 
                 // 
 
@@ -456,7 +460,8 @@ app.post('/updateHomeOwnerListingVideoInfo', (req, res) => {
     let files_uploaded_name_array = req.body.files_uploaded_name_array
     console.log('user_email')
     console.log(user_email)
-
+    console.log('   ')
+    console.log(files_uploaded_name_array)
 
     MongoClient.connect(MONGODB_CONNECTION_STRING,
         {
@@ -470,7 +475,9 @@ app.post('/updateHomeOwnerListingVideoInfo', (req, res) => {
             //find the user by session ID
             dbo.collection("homer_lite_user").updateOne(
                 { email: user_email },
-                { $set: { files_uploaded_name_array: files_uploaded_name_array } },
+                // The array passed in should be sliced into items and push each
+                // of the items into the DB field.
+                { $push: { files_uploaded_name_array: { $each: files_uploaded_name_array } } },
                 { upsert: true }
             )
             db.close()
@@ -598,6 +605,78 @@ app.get('/UpdateHomeOwnerListingProperties', (req, res) => {
 })
 
 
+// Update Home Owner Map Steps
+app.post('/HomeOwnerMapSteps', (req, res) => {
+    console.log('POST /HomeOwnerMapSteps')
+    let user_email = req.body.user_email
+    let home_owner_map_config_step = req.body.home_owner_map_config_step
+    console.log(`612 req.body`)
+    console.log(req.body)
+    console.log(user_email)
+    console.log(home_owner_map_config_step)
+    MongoClient.connect(MONGODB_CONNECTION_STRING,
+        {
+            sslValidate: true,
+            sslCA: ca
+        }
+        , function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("Homer");
+
+
+            dbo.collection("homer_lite_user")
+                .updateOne(
+                    { email: user_email },
+                    { $set: { home_owner_map_config_step: home_owner_map_config_step } },
+                    { upsert: true }
+                )
+
+            db.close()
+        })
+})
+
+
+
+
+app.get('/HomeOwnerMapSteps/:user_email', (req, res) => {
+    console.log('GET /HomeOwnerMapSteps')
+    let user_email = req.params.user_email
+    console.log(`642 req.body?----------------`)
+    // console.log(req)
+    console.log(req.body)
+    console.log(`642 req.params?----------------`)
+    console.log(req.params.user_email)
+    console.log(user_email)
+    MongoClient.connect(MONGODB_CONNECTION_STRING,
+        {
+            sslValidate: true,
+            sslCA: ca
+        }
+        , function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("Homer");
+
+
+            dbo.collection("homer_lite_user")
+                .findOne(
+                    { email: user_email }
+                ).then(
+                    result => {
+                        console.log(`result 660 ${result.home_owner_map_config_step}`)
+                        console.log(result.home_owner_map_config_step)
+                        res.send(result.home_owner_map_config_step + '')
+                        // console.log(result)
+                    }
+                )
+
+            db.close()
+        })
+})
+
+
+
+
+
 app.post('/fetchUserAlerts', (req, res) => {
     console.log('fetchUserAlerts ---------------- 560')
     console.log(req.body)
@@ -644,6 +723,41 @@ app.post('/fetchUserAlerts', (req, res) => {
 })
 
 
+app.post('/fetchNewUpdates', (req, res) => {
+    console.log('fetchNewUpdates ---------------- 727')
+    console.log(req.body)
+    let user_email = req.body.user_email
+    try {
+
+        MongoClient.connect(MONGODB_CONNECTION_STRING,
+            {
+                sslValidate: true,
+                sslCA: ca
+            }
+            , function (err, db) {
+                if (err) throw err;
+                var dbo = db.db("Homer");
+
+                //find the user by session ID
+                dbo.collection("homer_lite_listings").find(
+                    // { email: user_email },
+                ).toArray((err,results) => {
+                    console.log(results)
+                    console.log('results')
+                    res.send(results)
+                })
+                db.close()
+            })
+
+    } catch (error) {
+        console.log(error)
+    }
+    finally {
+        // res.end(res.send('success'))
+    }
+
+})
+
 
 // Video streaming
 app.get('/fetchVideo/:file_name', function (req, res) {
@@ -682,6 +796,112 @@ app.get('/fetchVideo/:file_name', function (req, res) {
 });
 
 
+
+app.post('/updateListingLocation', function (req, res) {
+    console.log('updateListingLocation')
+    console.log(req.body.map_center)
+    let user_email = req.body.user_email
+    let map_center = [parseFloat(req.body.map_center[0]),parseFloat(req.body.map_center[1])]
+
+    MongoClient.connect(MONGODB_CONNECTION_STRING,
+        {
+            sslValidate: true,
+            sslCA: ca
+        }
+        , function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("Homer");
+
+
+            dbo.collection("homer_lite_user")
+                .updateOne(
+                    { email: user_email },
+                    { $set :{listing_location : map_center} },
+                    { upsert : true}
+                )
+                // .then(
+                //     result => {
+                //         console.log(`result 660 ${result.home_owner_map_config_step}`)
+                //         console.log(result.home_owner_map_config_step)
+                //         res.send(result.home_owner_map_config_step + '')
+                //         // console.log(result)
+                //     }
+                // )
+
+            db.close()
+        })
+
+
+
+    res.send('succecss')
+    res.end()
+});
+
+app.post('/updateDescription', function (req, res) {
+    console.log('updateDescription')
+   
+    let user_email = req.body.user_email
+    let listing_description = req.body.listing_description
+    console.log(user_email,listing_description)
+    MongoClient.connect(MONGODB_CONNECTION_STRING,
+        {
+            sslValidate: true,
+            sslCA: ca
+        }
+        , function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("Homer");
+
+
+            dbo.collection("homer_lite_user")
+                .updateOne(
+                    { email: user_email },
+                    { $set :{listing_description : listing_description} },
+                    { upsert : true}
+                ).then(()=>{
+                    console.log('827 in then()')
+                    dbo.collection("homer_lite_user")
+                    .findOne(
+                        { email: user_email }
+                    ).then(
+                        (result) => {
+                            console.log(result)
+                            dbo.collection("homer_lite_listings")
+                            .updateOne(
+                                { email: user_email },
+                                { $set :{
+                                    update_time         : new Date(),
+                                    title               : 'new home added',
+                                    listing_description : listing_description,
+                                    listing_location    : result.listing_location,
+                                    listing_videos : result.files_uploaded_name_array} },
+                                { upsert : true}
+                            ).then(db.close())
+                        }
+)
+                })
+                // .then(
+                //     result => {
+                //         console.log(`result 660 ${result.home_owner_map_config_step}`)
+                //         console.log(result.home_owner_map_config_step)
+                //         res.send(result.home_owner_map_config_step + '')
+                //         // console.log(result)
+                //     }
+                // )
+
+            // db.close()
+        })
+
+
+
+    res.send('succecss')
+    res.end()
+});
+
+
+app.post('/checkSchedule',(req,res)=>{
+    console.log('/checkSchedule')
+})
 
 
 

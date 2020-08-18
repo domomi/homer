@@ -1,0 +1,87 @@
+/* .housingMarker {
+    background-image: url('./img/Framework.png');
+    background-size: cover;
+    width: 150px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: red;
+  } */
+
+  /* .mapboxgl-marker
+  {
+    background-image: url('./img/Framework.png');
+    background-size: cover;
+    width: 150px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: red;
+    
+  } */
+
+.housemates{
+  background-image: url('./img/house_mates.png');
+    background-size: cover;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.moving_help{
+  background-image: url('./img/moving-help.png');
+  background-size: cover;
+  width: 8vw;
+  height: 8vw;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.seeking_home{
+  background-image: url('./img/seeking_home.png');
+  background-size: cover;
+  width: 8vw;
+  height: 8vw;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.home_listing{
+  background-image: url('./img/home_listing.png');
+  background-size: cover;
+  width: 8vw;
+  height: 8vw;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+
+.in_home_help{
+  background-image: url('./img/in_home_help.png');
+  background-size: cover;
+  width: 8vw;
+  height: 8vw;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+.mapboxgl-ctrl-bottom-left{
+  display: none;
+}
+
+.mapboxgl-ctrl-bottom-right{
+  display: none;
+}
+
+ .mapboxgl-ctrl-geocoder{
+
+  z-index: 102;
+
+}
+
