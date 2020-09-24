@@ -1,6 +1,6 @@
 # Homer - community-based, real-time housing marketplace
 
-[![License](https://img.shields.io/badge/License-GNU-blue.svg)](https://github.com/domomi/homer/blob/master/LICENSE) [![Slack](https://img.shields.io/badge/Join-Slack-blue)](https://thehomer.slack.com/)
+[![License](https://img.shields.io/badge/License-GNU-blue.svg)](https://github.com/domomi/homer/blob/master/LICENSE) [![Slack](https://img.shields.io/badge/Join-Slack-gold)](https://thehomer.slack.com/) [![Website](https://img.shields.io/badge/View-Website-purple)](https://findhomer.com)
 
 Homer is a community-based, real-time housing marketplace that helps you find, compare and get alerts on rental homes from your community using the logic you define. Renters and homeowners use Homer everyday to improve their rental journey and shape the future of cities. It is an open source project supported by the [IBM Builder Program](https://developer.ibm.com/startups/) and grant from [New Ventures BC](www.newventuresbc.com).
 
